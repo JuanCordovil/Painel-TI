@@ -1,3 +1,37 @@
-<h1>Hello, {{ title() }}</h1>
+<header>
+  <h1>Chamados abertos: {{ chamados().length }}</h1>
+  <div class="hoje">
+    <span class="abertos">▲ {{ abertosHoje() }} abertos hoje</span>
+    <span class="fechados">▼ {{ fechadosHoje() }} fechados hoje</span>
+  </div>
+</header>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Título</th>
+      <th>Técnico</th>
+      <th>Requerente</th>
+      <th>Entidade</th>
+      <th>Localização</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (c of chamados(); track c.id) {
+      <tr>
+        <td>{{ c.id }}</td>
+        <td><span class="status" [attr.data-status]="c.status">{{ c.status }}</span></td>
+        <td>{{ c.titulo }}</td>
+        <td>{{ c.tecnico }}</td>
+        <td>{{ c.requerente }}</td>
+        <td>{{ c.entidade }}</td>
+        <td>{{ c.localizacao }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
 
 <router-outlet />

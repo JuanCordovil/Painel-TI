@@ -1,0 +1,116 @@
+:host {
+  display: block;
+  padding: 24px 32px;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.hoje {
+  display: flex;
+  gap: 12px;
+}
+
+.hoje span {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* ▲ entrou chamado novo (alerta), ▼ saiu chamado resolvido (bom) */
+.abertos {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.fechados {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+}
+
+th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1e293b;
+  background: #e0ecff;
+  border-bottom: 2px solid #bfd6ff;
+}
+
+td {
+  padding: 12px 16px;
+  font-size: 1rem;
+  color: #0b1220;
+  border-bottom: 1px solid #eef2f7;
+}
+
+/* Status em "etiqueta" colorida */
+.status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.status[data-status='Novo'] {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status[data-status='Em atendimento'] {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status[data-status='Planejado'] {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.status[data-status='Pendente'] {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8fbff;
+}
+
+tbody tr:hover {
+  background: #eaf3ff;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}

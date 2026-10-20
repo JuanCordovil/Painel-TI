@@ -6,6 +6,9 @@
 /out-tsc
 /bazel-out
 
+# Tokens do GLPI
+/proxy.conf.json
+
 # Node
 /node_modules
 npm-debug.log

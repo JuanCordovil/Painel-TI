@@ -9,18 +9,19 @@ const STATUS: Record<number, string> = {
   4: 'Pendente',
 };
 
-// Grupos técnicos da TI (nomes como cadastrados no GLPI; a busca é por "contém").
-const GRUPOS_TI = ['Sistemas', 'Infra'];
+// Grupos técnicos de outras áreas (nomes como cadastrados no GLPI; a busca é por "contém").
+// Tudo que não for desses grupos, inclusive chamado sem grupo, aparece no painel da TI.
+const GRUPOS_EXCLUIDOS = ['Almoxarifado', 'Fiscal', 'Desenvolvimento'];
 const CAMPO_GRUPO_TECNICO = 8;
 
 type Params = Record<string, string | number | boolean>;
 
-// Monta critérios aninhados do GLPI: (campo OR campo ...), ligado ao restante por `link`.
-function grupoCriterios(prefixo: string, campo: number, searchtype: string, valores: (string | number)[]): Params {
+// Monta critérios aninhados do GLPI: (campo `ligacao` campo ...), ligado ao restante por `link`.
+function grupoCriterios(prefixo: string, campo: number, searchtype: string, valores: (string | number)[], ligacao = 'OR'): Params {
   const params: Params = {};
   valores.forEach((valor, i) => {
     if (i > 0) {
-      params[`${prefixo}[criteria][${i}][link]`] = 'OR';
+      params[`${prefixo}[criteria][${i}][link]`] = ligacao;
     }
     params[`${prefixo}[criteria][${i}][field]`] = campo;
     params[`${prefixo}[criteria][${i}][searchtype]`] = searchtype;
@@ -29,11 +30,11 @@ function grupoCriterios(prefixo: string, campo: number, searchtype: string, valo
   return params;
 }
 
-// Restringe a busca aos chamados atribuídos a um dos grupos da TI, no índice `i` dos critérios.
+// Exclui os chamados atribuídos a grupos de outras áreas (não é de A, E não é de B...), no índice `i` dos critérios.
 function filtroTi(i: number): Params {
   return {
     [`criteria[${i}][link]`]: 'AND',
-    ...grupoCriterios(`criteria[${i}]`, CAMPO_GRUPO_TECNICO, 'contains', GRUPOS_TI),
+    ...grupoCriterios(`criteria[${i}]`, CAMPO_GRUPO_TECNICO, 'notcontains', GRUPOS_EXCLUIDOS, 'AND'),
   };
 }
 

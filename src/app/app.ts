@@ -39,6 +39,16 @@ export class App {
     });
   }
 
+  // Com mais de um usuário no campo o GLPI devolve lista (ou "810,842"); resolve cada id para o nome.
+  private resolverNomes(valor: unknown): string {
+    const ids = Array.isArray(valor) ? valor : String(valor ?? '').split(',');
+    return ids
+      .map(id => String(id).trim())
+      .filter(id => id !== '')
+      .map(id => this.nomes[id] ?? id)
+      .join(', ');
+  }
+
   // Fala em voz alta na TV; só dispara depois da primeira carga, para não anunciar o que já existia.
   private anunciarNovos(chamados: Chamado[]) {
     const ids = new Set(chamados.map(c => c.id));
@@ -63,8 +73,8 @@ export class App {
       this.chamados.set(
         chamados.map(c => ({
           ...c,
-          tecnico: this.nomes[c.tecnico] ?? c.tecnico,
-          requerente: this.nomes[c.requerente] ?? c.requerente,
+          tecnico: this.resolverNomes(c.tecnico),
+          requerente: this.resolverNomes(c.requerente),
         })),
       );
     });
